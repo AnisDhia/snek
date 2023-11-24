@@ -1,23 +1,21 @@
 
+#include <thread>
 #include "Game.h"
 
+#define WINDOW_HEIGHT 640
+#define WINDOW_WIDTH 800
+
 Game *game = nullptr;
+const int FPS = 30;
+const int frameDelay = 1000 / FPS;
 
-int main(int argc, char *argv[]) {
-    const int FPS = 30;
-    const int frameDelay = 1000 / FPS;
-
+void updateAndRenderHandler() {
     Uint32 frameStart;
     int frameTime;
-
-    game = new Game();
-    game->init("Snek", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
 
     while (game->Running()) {
         frameStart = SDL_GetTicks();
 
-
-        game->handleEvents();
         if (!game->gamePaused)
             game->update();
         game->render();
@@ -27,9 +25,20 @@ int main(int argc, char *argv[]) {
             SDL_Delay(frameDelay - frameTime);
         }
     }
+}
+
+int main(int argc, char *argv[]) {
+    game = new Game("Snek", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, false);
+
+    std::thread renderThread(updateAndRenderHandler);
+
+    while (game->Running()) {
+        game->handleEvents();
+    }
+
+    renderThread.join();
 
     game->clean();
     delete game;
     return 0;
 }
-//

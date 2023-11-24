@@ -8,14 +8,38 @@
 #include <SDL_image.h>
 #include <iostream>
 
+typedef struct {
+    SDL_Texture *texture;
+    SDL_Rect destRect;
+} Text;
+
+// texts id enum
+enum {
+    HomeTitle,
+    HomeSubTitle,
+    GameOverTitle,
+    GameOverSubTitle,
+    GamePausedTitle,
+    Score
+} TextId;
+
 
 class Game {
 public:
     int screenWidth;
     int screenHeight;
     bool gamePaused = false;
+    bool gameOver = false;
+    Text *texts[sizeof(TextId) + 1] = {nullptr};
 
-    Game();
+    Game(
+            const char *title, // title of the window
+            int xPos,  // x position of the window
+            int yPos,  // y position of the window
+            int screenWidth,  // width of the window
+            int screenHeight,  // height of the window
+            bool fullscreen  // fullscreen or not
+    );
 
     ~Game();
 

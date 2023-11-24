@@ -17,12 +17,28 @@ Snake::Snake(
 Snake::~Snake() {}
 
 void Snake::update(int screenWidth, int screenHeight) {
-    tailX[0] = x;
-    tailY[0] = y;
+    if (x >= screenWidth) {
+        x = 0;
+    } else if (x < 0) {
+        x = screenWidth;
+    }
+    if (y >= screenHeight) {
+        y = 0;
+    } else if (y < 0) {
+        y = screenHeight;
+    }
+
     for (int i = nTail - 1; i > 0; i--) {
+        if (tailX[i] == x && tailY[i] == y) { // if snake eats itself then game over
+            this->Die();
+            break;
+        }
+
         tailX[i] = tailX[i - 1];
         tailY[i] = tailY[i - 1];
     }
+    tailX[0] = x;
+    tailY[0] = y;
 
     switch (direction) {
         case 0:
@@ -40,19 +56,6 @@ void Snake::update(int screenWidth, int screenHeight) {
         default:
             break;
     }
-    if (x > screenWidth) {
-        x = 0;
-    } else if (x < 0) {
-        x = screenWidth;
-    }
-
-    if (y > screenHeight) {
-        y = 0;
-    } else if (y < 0) {
-        y = screenHeight;
-    }
-
-
 }
 
 void Snake::render() {
@@ -68,7 +71,15 @@ void Snake::render() {
 }
 
 void Snake::changeDirection(int dir) {
-    direction = dir;
+    if (dir == 0 && direction != 1) {
+        direction = dir;
+    } else if (dir == 1 && direction != 0) {
+        direction = dir;
+    } else if (dir == 2 && direction != 3) {
+        direction = dir;
+    } else if (dir == 3 && direction != 2) {
+        direction = dir;
+    }
 }
 
 void Snake::addTail() {

@@ -7,6 +7,10 @@
 
 #include <SDL.h>
 
+#define GRID_SIZE 100
+#define CELL_SIZE 10
+
+
 class Map {
 public:
     //snake map
