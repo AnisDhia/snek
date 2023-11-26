@@ -6,7 +6,7 @@
 #define WINDOW_WIDTH 800
 
 Game *game = nullptr;
-const int FPS = 30;
+const int FPS = 20;
 const int frameDelay = 1000 / FPS;
 
 void updateAndRenderHandler() {
@@ -31,6 +31,10 @@ int main(int argc, char *argv[]) {
     game = new Game("Snek", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, false);
 
     std::thread renderThread(updateAndRenderHandler);
+
+    for (int i = 0; i < argc; i++) {
+        std::cout << argv[i] << std::endl;
+    }
 
     while (game->Running()) {
         game->handleEvents();

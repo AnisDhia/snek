@@ -1,6 +1,7 @@
 # Snek
 
 Snake game using sdl2 and C++
+![img.png](img.png)
 
 ## dependencies
 

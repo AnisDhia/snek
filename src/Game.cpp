@@ -64,13 +64,7 @@ void Game::init(const char *title, int xpos, int ypos, int screenWidth, int scre
         if (window) {
             std::cout << "Window created!: " << screenHeight << "x" << screenWidth << std::endl;
         }
-
-        int imgFlags = IMG_INIT_PNG;
-        if (!(IMG_Init(imgFlags) & imgFlags)) {
-            std::cout << "SDL_image could not initialize! SDL_image Error: " << IMG_GetError() << std::endl;
-        }
-
-
+        
         if (TTF_Init() < 0) {
             std::cout << "SDL_ttf could not be initialized SDL_ttf Error: " << TTF_GetError() << std::endl;
         }
